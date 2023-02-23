@@ -5,6 +5,7 @@ window.onload = function () {
     let b = ''
     let expressionResult = ''
     let selectedOperation = null
+    let check_null
 
     // окно вывода результата
     outputElement = document.getElementById("result")
@@ -13,14 +14,24 @@ window.onload = function () {
     digitButtons = document.querySelectorAll('[id ^= "btn_digit_"]')
 
     function onDigitButtonClicked(digit) {
+        check_null = 0
         if (!selectedOperation) {
             if ((digit != '.') || (digit == '.' && !a.includes(digit))) {
+                if (check_null == 0 & a != '0'){
                 a += digit
+                } else {
+                    a = digit
+                }
             }
             outputElement.innerHTML = a
         } else {
+            check_null = 0
             if ((digit != '.') || (digit == '.' && !b.includes(digit))) {
-                b += digit
+                if (check_null == 0 & b != '0'){
+                    b += digit
+                    } else {
+                        b = digit
+                    }
                 outputElement.innerHTML = b
             }
         }
@@ -107,5 +118,19 @@ window.onload = function () {
         selectedOperation = null
 
         outputElement.innerHTML = a
+    }
+};
+
+function change_theme() {
+    body_theme_id = document.getElementById("body_theme_id")
+    button_value = document.getElementById("change_theme_button")
+
+    if (button_value.value == "Черный фон") {
+        button_value.value = "Серый фон";
+        body_theme_id.style.cssText = 'background-color: gray;';
+    }
+    else {
+        button_value.value = "Черный фон";
+        body_theme_id.style.cssText = 'background-color: black;';
     }
 };
