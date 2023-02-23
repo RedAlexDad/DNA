@@ -1,176 +1,98 @@
-# DNA
-# Проектирование сетевых приложений
+# JavaScript
 
-# ЛР 2. Calculator. JavaScript
+Репозиторий курса Проектирование Сетевых Приложений
 
-**Цель** данной лабораторной работы - знакомство с инструментами построения пользовательских интерфейсов web-сайтов: HTML, CSS, JavaScript. В ходе выполнения работы, вам предстоит продолжить реализовывать простой калькулятора,  и затем выполнить задания по варианту.
+#### Образ виртуальной машины Linux [Ubuntu 20.04](https://github.com/iu5git/Standards/blob/main/Linux/Linux.md) для выполнения заданий курса
+[Материалы](Labs2022) курса 2022 года
 
-## План
+## Лекции
 
-1. Программирование логики с помощью JavaScript
-2. Доступ к HTML-элементам из JavaScript
-3. Программирование кнопок калькулятора
-4. Запуск калькулятора с помощью LiveServer
-5. Задание
+* **Лекция 1. Введение в Web**
 
-## 1. Программирование логики с помощью JavaScript
+Основы Web: HTML, URI, кратко HTTP. CSS, кратко JavaScript
 
-Язык программирования JavaScript служит основным инструментом для описания логики и интерактивности веб-страниц. В данной работе с помощью Js мы будем программировать кнопки калькулятора.
+Основы работы браузера. DOM
 
-Как и CSS, js-скрипт можно задать в самом HTML-документе (вложенный скрипт), либо вынести в отдельный файл и сослаться на него в HTML-файле:
+* **Лекция 2. Основы JavaScript**
 
-```html
-<head> 
-  <title>калькулятор</title>
-  <link rel="stylesheet" href="style.css"> 
-  <script type="text/javascript" src="script.js"></script> 
-</head>
-```
+операторы, функции, коллекции, классы
 
-## 2. Доступ к HTML-элементам из JavaScript
+* **Лекция 3. Модель клиент-сервер**
 
-Самый распространенный путь доступа к HTML-элементам из скрипта - получение HTML-объекта по его идентификатору. Для этого существует метод `getElementById`:
+npm, HTTP, модель клиент-сервер, кратко express
 
-```html
-<body>
-	<p id="paragraph">Lorem Ipsum</p>
+* **Лекция 4. Запросы AJAX**
 
-	<!--вложенный JS-скрипт-->
-	<script>
-		<!-- обращаемся к HTML-документу и ищем объект с id=paragraph -->
-		element = document.getElementById("paragraph")
+AJAX. JSON/XML, XmlHttpRequest, Cors
 
-		<!-- через свойство innerHTML у полученного объекта можно изменить его содержимое-->
-		element.innerHTML = "Измененный текст параграфа";
-	</script>
-</body>
-```
+* **Лекция 5. Асинхронный JavaScript**
 
-Также JS предоставляет и другие методы получения элементов:
+Event Loop, промисы, async/await, fetch
 
-```jsx
-document.getElementsByTagName(name) // поиск элементов по тэгу
-document.getElementsByClassName(name) // поиск элементов определенного css класса
-```
+* **Лекция 6. Бэкенд на JavaScript** 
 
-про другие способы взаимодействия с HTML-элементами из JS можно почитать [здесь](https://www.w3schools.com/js/js_htmldom.asp).
+Node.js. Бэкенд на JavaScript
 
-## 3. Программирование кнопок калькулятора
+* **Лекция 7. Web реального времени**
 
-```python
-// файл script.js
-window.onload = function(){ 
+HTTP/2, Polling, WebSocket
 
-let a = ''
-let b = ''
-let expressionResult = ''
-let selectedOperation = null
+### Модуль 1
 
-// окно вывода результата
-outputElement = document.getElementById("result")
+#### Лабораторная работа 1
 
-// список объектов кнопок циферблата (id которых начинается с btn_digit_)
-digitButtons = document.querySelectorAll('[id ^= "btn_digit_"]')
+Создание калькулятора: верстка на HTML, CSS. LiveServer. Добавить кнопки по варианту.
 
-function onDigitButtonClicked(digit) {
-    if (!selectedOperation) {
-        if ((digit != '.') || (digit == '.' && !a.includes(digit))) { 
-            a += digit
-        }
-        outputElement.innerHTML = a
-    } else {
-        if ((digit != '.') || (digit == '.' && !b.includes(digit))) { 
-            b += digit
-            outputElement.innerHTML = b        
-        }
-    }
-}
+* [Методические указания](/tutorials/calculator/HTML.md)
 
-// устанавка колбек-функций на кнопки циферблата по событию нажатия
-digitButtons.forEach(button => {
-    button.onclick = function() {
-        const digitValue = button.innerHTML
-        onDigitButtonClicked(digitValue)
-    }
-});
+#### Лабораторная работа 2
 
-// установка колбек-функций для кнопок операций
-document.getElementById("btn_op_mult").onclick = function() { 
-    if (a === '') return
-    selectedOperation = 'x'
-}
-document.getElementById("btn_op_plus").onclick = function() { 
-    if (a === '') return
-    selectedOperation = '+'
-}
-document.getElementById("btn_op_minus").onclick = function() { 
-    if (a === '') return
-    selectedOperation = '-'
-}
-document.getElementById("btn_op_div").onclick = function() { 
-    if (a === '') return
-    selectedOperation = '/'
-}
+Создание калькулятора: функции на JS. По вариантам реализовать различные функции калькулятора: log, sin, накопление итога и тд
 
-// кнопка очищения
-document.getElementById("btn_op_clear").onclick = function() { 
-    a = ''
-    b = ''
-    selectedOperation = ''
-    expressionResult = ''
-    outputElement.innerHTML = 0
-}
+* [Методические указания](/tutorials/calculator/JS.md)
 
-// кнопка расчёта результата
-document.getElementById("btn_op_equal").onclick = function() { 
-    if (a === '' || b === '' || !selectedOperation)
-        return
-        
-    switch(selectedOperation) { 
-        case 'x':
-            expressionResult = (+a) * (+b)
-            break;
-        case '+':
-            expressionResult = (+a) + (+b)
-            break;
-        case '-':
-            expressionResult = (+a) - (+b)
-            break;
-        case '/':
-            expressionResult = (+a) / (+b)
-            break;
-    }
-    
-    a = expressionResult.toString()
-    b = ''
-    selectedOperation = null
+#### Лабораторная работа 3
 
-    outputElement.innerHTML = a
-}
-};
-```
-## 4. Запуск калькулятора с помощью LiveServer
+Знакомство с node, npm. Верстка интерфейса с карточками, данные через mock объекты.
 
-В приложении VS Code зайдите в расширения и установите Live Server.
+* [Методические указания](/tutorials/front/front.md)
 
-<img width="1003" alt="Снимок экрана 2023-01-28 в 11 56 47" src="https://user-images.githubusercontent.com/55272890/215257002-85e8b177-93d8-47ef-9635-fec396f144aa.png">
+#### Домашнее задание
 
-Отлично! Теперь можно запустить наш калькулятор на сервере, нажав на кнопку **Go Live** на нижней панели.
-При изменении кода в файлах страничка на сервере будет автоматически перезагружаться.
+* [Задания на знание JavaScript](/tutorials/homework/homework.md): работа с коллекциями, функциями, классами
 
-## 5. Задание
+#### Рубежный контроль 1
 
-Вариант = (№ в списке % 3) + 1
+### Модуль 2
 
-1. Запрограммируйте операцию смены знака +/-;
-2. Запрограммируйте операцию вычисления процента %;
-3. Добавьте кнопку стирания введенной цифры назад (backspace). Расположить кнопку можно, например, на месте нерабочих +/- и % кнопок;
-4. Сделайте смену цвета фона по кнопке;
-5. Запрограммируйте операцию вычисления квадратного корня √;
-6. Запрограммируйте операцию возведения в квадрат x²;
-7. Запрограммируйте операцию вычисления факториала x!;
-8. Добавьте кнопку, которая за раз добавляет сразу три нуля (000);
-9. Запрограммируйте накапливаемое сложние;
-10. Запрограммируйте накапливаемое вычитание;
-11. Сделайте смену цвета окна вывода результата по кнопке;
-12. 
+#### Лабораторная работа 4
+Продолжение Лабораторной работы 3: подключение к стороннему API (VK?), Cors. Запросы XHR
+
+* [Методические указания](/tutorials/front/front-api.md)
+
+#### Лабораторная работа 5
+Продолжение Лабораторной работы 4: замена коллбеков на промисы и/или await. Запросы fetch
+
+#### Лабораторная работа 6
+Реализация собственного API на Node.js, подключение к интерфейсу.
+
+* [Методические указания](/tutorials/lab6)
+
+#### Дополнительное задание
+Продолжение Лабораторной работы 6 - добавление уведомлений/обновлений через Polling
+
+#### Рубежный контроль 2
+
+### Требуемое ПО:
+1. node.js
+2. npm
+3. VS Code + JS plugins и тд
+4. LiveServer
+
+### Команда курса выражает благодарность за помощь в подготовке данного курса
+1. Алехин Сергей Сергеевич
+2. Елхимова Ирина Сергеевна
+3. Шевчук Михаил Сергеевич
+4. Толпаров Натан Русланович
+5. Вивчарук Ростислав Владимирович
+6. Можаев Дмитрий Владимирович
