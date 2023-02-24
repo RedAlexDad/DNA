@@ -84,6 +84,12 @@ window.onload = function () {
         }
     }
 
+    // Кнопка квадратный корень
+    // document.getElementById("btn_op_sign").onclick = function () {
+    //     a = ((+a) ** (1/2))
+    //     outputElement.innerHTML = a
+    // }
+
     // кнопка очищения
     document.getElementById("btn_op_clear").onclick = function () {
         a = ''
