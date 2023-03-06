@@ -1,21 +1,26 @@
-import {ProductComponent} from "../../../components/product/index.js";
-import {BackButtonComponent} from "../../../components/back-button/index.js";
-import {MainPage} from "../../main/index.js";
+import {ProductComponent} from "../../../Project/components/product/index.js";
+import {BackButtonComponent} from "../../../Project/components/back-button/index.js";
+import {MainPage} from "../index.js";
 
 export class ProductPage {
     constructor(parent, id) {
+        debugger
         this.parent = parent
         this.id = id
+
+        console.log('ProductPage; parent:', parent)
     }
 
     getData() {
         return {
             id: 1,
-            src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
-            title: `Акция ${this.id}`,
-            text: "Такой акции вы еще не видели"
+            src: "https://static.vecteezy.com/system/resources/previews/000/486/315/original/shopping-cart-icon-design-vector.jpg",
+            // title: `ID ${this.id} продукта`,
+            title: `ID ${this.id}`,
+            text: "Успешно! Ожидайте, собака в ближайшее время будет у Вас"
         }
     }
+    
 
     get pageRoot() {
         return document.getElementById('product-page')
@@ -45,5 +50,7 @@ export class ProductPage {
         const data = this.getData()
         const stock = new ProductComponent(this.pageRoot)
         stock.render(data)
+
+        console.log('main/product/index.js; render:', data)
     }
 }

@@ -1,7 +1,7 @@
 import {ButtonComponent} from "../../components/button/index.js";
 import {ProductCardComponent} from "../../components/product-card/index.js";
 import {ProductComponent} from "../../components/product/index.js";
-import {ProductPage} from "../../pages/main/product/index.js";
+import {ProductPage} from "./product/index.js";
 import {BackButtonComponent} from "../../components/back-button/index.js";
 
 
