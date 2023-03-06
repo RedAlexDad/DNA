@@ -160,48 +160,26 @@ export class MainPage {
         )
     }
 
-    addListeners(data, listener) {
-        document.getElementById(`click-card-${data.id}`)
-        document.addEventListener("click", listener)
+    clickCard(e) {
+        const cardId = e.target.dataset.id
+        console.log('cardId:', cardId)
     }
-    
-    render(data, listener) {
-        const html = this.getHTML(data)
+
+    render() {
+        this.parent.innerHTML = ''
+        const html = this.getHTML()
         this.parent.insertAdjacentHTML('beforeend', html)
-        this.addListeners(data, listener)
+        
+        const data = this.getData()
+        data.forEach((item) => {
+            const productCard = new ProductCardComponent(this.pageRoot)
+            productCard.render(item)
+        })
+
+        const productCard = new ProductCardComponent(this.pageRoot)
+        productCard.render(item, this.clickCard.bind(this))
+        console.log('productCard:', productCard)
     }
-
-
-    // render() {
-    //     this.parent.innerHTML = ''
-    //     const html = this.getHTML()
-    //     this.parent.insertAdjacentHTML('beforeend', html)
-    
-    //     const data = this.getData()
-    //     const productCard = new ProductCardComponent(this.pageRoot)
-    //     productCard.render(data)
-
-    //     console.log(html)
-    //     console.log(data)
-    //     console.log(this.parent)
-    // }
-
-    // render() {
-    //     // this.parent.innerHTML = ''
-    //     const html = this.getHTML()
-    //     this.parent.insertAdjacentHTML('beforeend', html)
-
-    //     const data = this.getData()
-    //     data.forEach((item) => {
-    //         const productCard = new ProductCardComponent(this.pageRoot)
-    //         productCard.render(item)
-    //     })
-
-    //     // this.addListeners(data, listener)
-    //     console.log('Worked')
-    //     console.log(data)
-    // }
-
 
 
 
