@@ -6,6 +6,7 @@ const mainPage = new MainPage(root);
 
 mainPage.render();
 
+
 // const btn_component = new ButtonComponent(root);
 
 // btn_component.render();

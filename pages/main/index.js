@@ -123,7 +123,7 @@ export class MainPage {
     //     })
     // }
 
-    // Part 6
+    // Part 6 Work
 
     getData() {
         return [
@@ -162,7 +162,9 @@ export class MainPage {
 
     clickCard(e) {
         const cardId = e.target.dataset.id
-        console.log('cardId:', cardId)
+
+        const productPage = new ProductPage(this.parent, cardId)
+        productPage.render()
     }
 
     render() {
@@ -173,51 +175,9 @@ export class MainPage {
         const data = this.getData()
         data.forEach((item) => {
             const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item)
+            productCard.render(item, this.clickCard.bind(this))
+            // console.log('render, productCard:', productCard)
+            console.log('render, item:', item)
         })
-
-        const productCard = new ProductCardComponent(this.pageRoot)
-        productCard.render(item, this.clickCard.bind(this))
-        console.log('productCard:', productCard)
     }
-
-
-
-    // Part 7
-
-    // render() {
-    //     this.parent.innerHTML = ''
-    //     const html = this.getHTML()
-    //     this.parent.insertAdjacentHTML('beforeend', html)
-    
-    //     const data = this.getData()
-    //     const product = new ProductComponent(this.pageRoot)
-    //     product.render(data)
-    // }
-
-    // clickCard(e) {
-    //     const cardId = e.target.dataset.id
-    
-    //     const productPage = new ProductPage(this.parent, cardId)
-    //     productPage.render()
-    // }
-
-    // clickBack() {
-    //     const mainPage = new MainPage(this.parent)
-    //     mainPage.render()
-    // }
-    
-    // render() {
-    //     this.parent.innerHTML = ''
-    //     const html = this.getHTML()
-    //     this.parent.insertAdjacentHTML('beforeend', html)
-    
-    //     const backButton = new BackButtonComponent(this.pageRoot)
-    //     backButton.render(this.clickBack.bind(this))
-    
-    //     const data = this.getData()
-    //     const stock = new ProductComponent(this.pageRoot)
-    //     stock.render(data)
-    // }
-    
 }

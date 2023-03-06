@@ -30,6 +30,4 @@ export class ProductCardComponent {
         this.parent.insertAdjacentHTML('beforeend', html)
         this.addListeners(data, listener)
     }
-    
-    
 }
