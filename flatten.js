@@ -22,4 +22,10 @@ function flatten(list) {
 console.log('Первоначальный вид:')
 console.log(list)
 console.log('После выполнения функции flatten:')
-console.log(flatten(list))
+console.log(flatten(list)) 
+// После выполнения функции flatten:
+/* [
+    1,  2,  3,  4, 5,
+    6, 10, 20, 30
+  ]
+*/ 
