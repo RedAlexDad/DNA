@@ -4,7 +4,6 @@ import {MainPage} from "../index.js";
 
 export class ProductPage {
     constructor(parent, id) {
-        debugger
         this.parent = parent
         this.id = id
 
