@@ -1,11 +1,13 @@
 import {ProductCardComponent} from "../../Project/components/product-card/index.js";
 import {ProductPage} from "./product/index.js";
 
+// Подключение CSS
 
 export class MainPage {
     constructor(parent) {
         this.parent = parent;
     }
+    
 
     getData() {
         return [
@@ -53,6 +55,7 @@ export class MainPage {
     }
 
     render() {
+        
         this.parent.innerHTML = ''
         const html = this.getHTML()
         this.parent.insertAdjacentHTML('beforeend', html)
