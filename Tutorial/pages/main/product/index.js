@@ -1,19 +1,24 @@
 import {ProductComponent} from "../../../components/product/index.js";
 import {BackButtonComponent} from "../../../components/back-button/index.js";
 import {MainPage} from "../index.js";
+// import {ajax} from "../../modules/ajax.js";
+// import {urls} from "../../modules/urls.js";
+// import {groupId} from "../../modules/consts.js";
 
 export class ProductPage {
     constructor(parent, id) {
         this.parent = parent
         this.id = id
+        console.log('ProductPage parent:', parent)
     }
+    
 
     getData() {
         return {
             id: 1,
-            src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
+            src: `${this.src}`,
             title: `Акция ${this.id}`,
-            text: "Такой акции вы еще не видели"
+            text: `Такой акции вы еще не видели`
         }
     }
 
