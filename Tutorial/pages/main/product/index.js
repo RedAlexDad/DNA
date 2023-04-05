@@ -6,18 +6,21 @@ import {MainPage} from "../index.js";
 // import {groupId} from "../../modules/consts.js";
 
 export class ProductPage {
-    constructor(parent, id) {
+    constructor(parent, id, data) {
         this.parent = parent
         this.id = id
-        console.log('ProductPage parent:', parent)
+        this.data = data
+        console.log('ProductPage data:', data)
     }
     
 
     getData() {
         return {
             id: 1,
-            src: `${this.src}`,
-            title: `Акция ${this.id}`,
+            src: `${this.data.photo_400_orig}`,
+            title: `Акция ${this.data.id}`,
+            first_name: this.data.first_name,
+            last_name: this.data.last_name,
             text: `Такой акции вы еще не видели`
         }
     }

@@ -8,14 +8,16 @@ import {urls} from "../../modules/urls.js";
 import {groupId} from "../../modules/consts.js";
 
 export class MainPage {
-    constructor(parent) {
+    constructor(parent, data_info) {
         this.parent = parent;
+        this.data_info = data_info
     }
 
     getData() {
         ajax.post(urls.getGroupMembers(groupId), (data) => {
             this.renderData(data.response.items)
-            console.log(data.response.items)
+            this.data_info = data.response.items
+            console.log(this.data_info)
         })
     }
 
@@ -41,6 +43,25 @@ export class MainPage {
     clickCard(e) {
         debugger;
         const cardId = e.target.dataset.id
+        const press = undefined;
+
+        Object.entries(this.data_info).forEach(([key, value]) => {
+            console.log(key, value.id);
+            if(value.id == cardId){
+                // press = this.data_info.id;
+                this.data_info = value;
+                // console.log('press:', press)
+            }
+        });
+
+        console.log('this.data_info:', this.data_info)
+
+        const productPage = new ProductPage(this.parent, cardId, this.data_info)
+        productPage.render()
+
+        console.log('cardId:', cardId)
+        console.log('this.data_info.id:', this.data_info.id)
+
         // const data = e.target.dataset
         // const info_data = document.getElementsByName(`card-${cardId}`)
         // console.log('info_data: ', info_data)
@@ -51,9 +72,6 @@ export class MainPage {
             // const productCard = new ProductPage(this.pageRoot)
             // productCard.render(e, this.clickCard.bind(this))
         // })
-
-        const productPage = new ProductPage(this.parent, cardId)
-        productPage.render()
     }
 
     render() {
