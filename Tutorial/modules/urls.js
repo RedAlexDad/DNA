@@ -7,11 +7,11 @@ class Urls {
     }
 
     getUserInfo(userId) {
-        return `${this.url}/users.get?user_ids=${userId}&fields=photo_400_orig&${this.commonInfo}`
+        return `${this.url}/users.get?user_ids=${userId}&fields=city${this.commonInfo}`
     }
 
     getGroupMembers(groupId) {
-        return `${this.url}/groups.getMembers?group_id=${groupId}&fields=photo_400_orig&${this.commonInfo}`
+        return `${this.url}/groups.getMembers?group_id=${groupId}&fields=photo_400_orig, city&${this.commonInfo}`
     }
 
     getGroupID(groupId) {

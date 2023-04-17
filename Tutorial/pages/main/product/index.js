@@ -21,7 +21,7 @@ export class ProductPage {
             title: `Акция ${this.data.id}`,
             first_name: this.data.first_name,
             last_name: this.data.last_name,
-            text: `Такой акции вы еще не видели`
+            city: this.data.city
         }
     }
 

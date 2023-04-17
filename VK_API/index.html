@@ -19,22 +19,22 @@
     console.log(ajax_class)
     console.log(groupId)
 
-    ajax_class.post(url_class.getGroupMembers(groupId), (data) => {
-            this.renderData(data.response.items)
-            console.log('data:', data.response.items)
-        })
+    // ajax_class.post(url_class.getGroupMembers(groupId), (data) => {
+    //         this.renderData(data.response.items)
+    //         console.log('data:', data.response.items)
+    //     })
 
+    // $.ajax({
+    //     url: url_class.getGroupID(groupId),
+    //     method: 'GET',
+    //     dataType: 'JSONP',
+    //     success: function(data) {
+    //         console.log('GET', data);
+    //     }
+    // })
+    debugger;
     $.ajax({
-        url: url_class.getGroupID(groupId),
-        method: 'GET',
-        dataType: 'JSONP',
-        success: function(data) {
-            console.log('GET', data);
-        }
-    })
-
-    $.ajax({
-        url: url_class.getGroupID(groupId),
+        url: url_class.getUserInfo('nikistor'),
         method: 'POST',
         dataType: 'JSONP',
         success: function(data) {

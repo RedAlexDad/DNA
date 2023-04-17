@@ -9,21 +9,35 @@ import {groupId} from "../../modules/consts.js";
 
 export class MainPage {
     constructor(parent, data_info) {
-        this.parent = parent;
+        this.parent = parent
         this.data_info = data_info
     }
 
     getData() {
+        debugger;
         ajax.post(urls.getGroupMembers(groupId), (data) => {
             this.renderData(data.response.items)
             this.data_info = data.response.items
-            console.log(this.data_info)
+            // console.log('data.response.items', data.response.items)
+            // console.log('getData', this.data_info)
         })
     }
 
+    // getDataUser() {
+    //     ajax.post(urls.getUserInfo(this.data_info.id), (data) => {
+    //         this.renderData(data.response.items)
+    //         this.data_info = data.response.items
+    //     })
+    //     console.log('getDataUser', this.data_info)
+    // }
+
     renderData(items) {
+        // debugger;
+        // console.log('renderData(items)', items)
+        
         items.forEach((item) => {
             const productCard = new ProductCardComponent(this.pageRoot)
+
             productCard.render(item, this.clickCard.bind(this))
         })
     }
@@ -35,18 +49,21 @@ export class MainPage {
     getHTML() {
         return (
             `
-                <div id="main-page" class="d-flex flex-wrap"><div/>
+            <div id="main-page">
+                <!-- <section class="carousel" aria-label="Gallery"></section> -->
+            </div>
             `
         )
+        // <section class="carousel" aria-label="Gallery" id="main-page"> </section>
     }
 
     clickCard(e) {
-        debugger;
+        // debugger;
         const cardId = e.target.dataset.id
-        const press = undefined;
+        // const press = undefined;
 
         Object.entries(this.data_info).forEach(([key, value]) => {
-            console.log(key, value.id);
+            // console.log('clickCard(E): ', key, value.id);
             if(value.id == cardId){
                 // press = this.data_info.id;
                 this.data_info = value;
@@ -54,16 +71,19 @@ export class MainPage {
             }
         });
 
-        console.log('this.data_info:', this.data_info)
+        // console.log('this.data_info:', this.data_info)
 
         const productPage = new ProductPage(this.parent, cardId, this.data_info)
         productPage.render()
 
-        console.log('cardId:', cardId)
-        console.log('this.data_info.id:', this.data_info.id)
+        // console.log('cardId:', cardId)
+        // console.log('this.data_info.id:', this.data_info.id)
+
+        // this.getDataUser()
+        // console.log('this.data_info:', this.data_info)
 
         // const data = e.target.dataset
-        // const info_data = document.getElementsByName(`card-${cardId}`)
+        // const info_data = document.getElementsByName(`card-${cardId}`)2 л
         // console.log('info_data: ', info_data)
         // console.log('index: ', document.getElementById(this.pageRoot))
         // console.log('pageRoot: ', this.pageRoot)
@@ -75,11 +95,10 @@ export class MainPage {
     }
 
     render() {
-        // debugger;
+        // debugger;   
         this.parent.innerHTML = ''
         const html = this.getHTML()
         this.parent.insertAdjacentHTML('beforeend', html)
-    
         this.getData()
     }
 }
