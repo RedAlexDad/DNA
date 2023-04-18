@@ -36,6 +36,8 @@ export class ProductCardComponent {
     }
 
     render(data, listener) {
+        debugger;
+        console.log(data)
         const html = this.getHTML(data)
         this.parent.insertAdjacentHTML('beforeend', html)
         this.addListeners(data, listener)

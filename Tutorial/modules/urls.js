@@ -10,8 +10,12 @@ class Urls {
         return `${this.url}/users.get?user_ids=${userId}&fields=city${this.commonInfo}`
     }
 
-    getGroupMembers(groupId) {
+    getUserGroupMembers(groupId) {
         return `${this.url}/groups.getMembers?group_id=${groupId}&fields=photo_400_orig, city&${this.commonInfo}`
+    }
+
+    getGroup(groupId) {
+        return `${this.url}/groups.getById?group_id=${groupId}&fields=links&${this.commonInfo}`
     }
 
     getGroupID(groupId) {

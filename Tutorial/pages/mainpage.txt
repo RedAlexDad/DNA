@@ -1,12 +1,11 @@
-import {ButtonComponent} from "../../components/button/index.js";
-import {ProductCardComponent} from "../../components/product-card/index.js";
-import {ProductComponent} from "../../components/product/index.js";
-import {ShowMainPage} from "../../components/main/ShowMainPage.js";
-import {ProductPage} from "./product/index.js";
-import {BackButtonComponent} from "../../components/back-button/index.js";
-import {ajax} from "../../modules/ajax.js";
-import {urls} from "../../modules/urls.js";
-import {groupId} from "../../modules/consts.js";
+import {ButtonComponent} from "../components/button/index.js";
+import {ProductCardComponent} from "../components/product-card/index.js";
+import {ProductComponent} from "../components/product/index.js";
+import {ProductPage} from "./product.js";
+import {BackButtonComponent} from "../components/back-button/index.js";
+import {ajax} from "../modules/ajax.js";
+import {urls} from "../modules/urls.js";
+import {groupId} from "../modules/consts.js";
 
 export class MainPage {
     constructor(parent, data_info) {
@@ -16,11 +15,11 @@ export class MainPage {
 
     getData() {
         debugger;
-        ajax.post(urls.getGroup(groupId), (data) => {
-            this.renderData(data.response[0])
-            this.data_info = data.response[0]
+        ajax.post(urls.getGroupMembers(groupId), (data) => {
+            this.renderData(data.response.items)
+            this.data_info = data.response.items
             // console.log('data.response.items', data.response.items)
-            console.log('getData', this.data_info)
+            // console.log('getData', this.data_info)
         })
     }
 
@@ -34,15 +33,13 @@ export class MainPage {
 
     renderData(items) {
         // debugger;
-        const show_main = new ShowMainPage(this.pageRoot)
-        show_main.render(items, this.clickCard.bind(this))
-        console.log('renderData(items)', show_main)
+        // console.log('renderData(items)', items)
+        
+        items.forEach((item) => {
+            const productCard = new ProductCardComponent(this.pageRoot)
 
-        // items.forEach((item) => {
-        //     const productCard = new ProductCardComponent(this.pageRoot)
-
-        //     productCard.render(item, this.clickCard.bind(this))
-        // })
+            productCard.render(item, this.clickCard.bind(this))
+        })
     }
 
     get pageRoot() {

@@ -20,22 +20,3 @@ class Urls {
         return `${this.url}/groups.getMembers?group_id=${groupId}&${this.commonInfo}`
     }
 }
-
-class Ajax {
-    debugger;
-    post(url, callback) {
-        console.log('url:', url);
-        let xhr = new XMLHttpRequest()
-        console.log('xhr:', xhr);
-        xhr.open('POST', url)
-        xhr.send()
-
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                const data = JSON.parse(xhr.response)
-                callback(data)
-                console.log(data)
-            }
-        }
-    }
-}

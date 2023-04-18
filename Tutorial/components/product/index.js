@@ -1,7 +1,7 @@
 export class ProductComponent {
     constructor(parent) {
         this.parent = parent
-        console.log('pr', parent)
+        // console.log('pr', parent)
     }
 
     getData() {
