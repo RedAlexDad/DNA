@@ -15,7 +15,7 @@ export class MainPage {
     }
 
     getData() {
-        debugger;
+        // debugger;
         ajax.post(urls.getGroup(groupId), (data) => {
             this.renderData(data.response[0])
             this.data_info = data.response[0]

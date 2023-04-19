@@ -15,6 +15,10 @@ export class ProductComponent {
         product.render(item[0])
     }
 
+    get pageRoot() {
+        return document.getElementById('data-info-user')
+    }
+
     getHTML(data) {
         return (
             `

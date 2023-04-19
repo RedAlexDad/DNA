@@ -18,9 +18,7 @@ export class ShowMainPage {
             <h5>Название сообщество: ${data.name}</h5>
             <div class="card-1" style="width: 300px;">
                 <img class="card-img-top" src="${data.photo_200}" alt="картинка">
-                <div class="card-body" id="button_group">
-                   <button class="btn btn-primary" id="click-card-1" data-id="1">Нажми на меня</button>
-                </div>
+                <div class="card-body" id="button_group"></div>
             </div>
             `
         )
@@ -32,7 +30,7 @@ export class ShowMainPage {
     }
 
     render(data, listener) {
-        debugger;
+        // debugger;
         console.log(data)
         const html = this.getHTML(data)
         this.parent.insertAdjacentHTML('beforeend', html)

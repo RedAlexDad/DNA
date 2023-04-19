@@ -1,19 +1,20 @@
-export class ButtonComponent {
+export class ButtonComponentLeft {
     constructor(parent) {
         this.parent = parent;
     }
 
     addListeners(listener) {
         document
-            .getElementById("click-button")
+            .getElementById("left-button")
             .addEventListener("click", listener)
     }
 
     getHTML() {
         return (
             `
-                <button id="click-button" class="btn btn-primary" type="button">Посмотреть</button>
+                <button id="left-button" class="btn btn-primary" type="button" href="#carousel__slide1">Go to last slide</button>
             `
+            // <a href="#carousel__slide${this.length}" class="carousel__prev">Go to last slide</a>
         )
     }
 
