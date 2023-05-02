@@ -1,5 +1,6 @@
 import {ProductCardComponent} from "../../Project/components/product-card/index.js";
 import {ProductPage} from "./product/index.js";
+// import {router} from "../internal/stocks/index.js";
 
 // Подключение CSS
 
@@ -59,7 +60,9 @@ export class MainPage {
         const html = this.getHTML()
         this.parent.insertAdjacentHTML('beforeend', html)
         
+        debugger;
         const data = this.getData()
+        // const data = router.get('/', StocksController.findStocks);
         data.forEach((item) => {
             const productCard = new ProductCardComponent(this.pageRoot)
             productCard.render(item, this.clickCard.bind(this))
