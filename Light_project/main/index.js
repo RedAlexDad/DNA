@@ -1,35 +1,26 @@
 import {ProductCardComponent} from "../components/product-card/index.js";
-import {ProductPage} from "./product/index.js";
+import {ProductPage} from "./page/CardPage.js";
+import {ajax} from "../modules/ajax.js";
 
+import {UpdateButtonComponent} from "../components/button/update.js"
+import {AddButtonComponent} from "../components/button/add.js"
+import {DogsPage} from "./page/DogsPage.js"
+import {AddPage} from "./page/AddPage.js"
+ 
 // Подключение CSS
 
 export class MainPage {
-    constructor(parent) {
+    constructor(parent, data) {
         this.parent = parent;
+        this.data = data;
     }
     
-
-    getData() {
-        return [
-            {
-                id: 1,
-                src: "https://blog.zoo.com.tr/wp-content/uploads/pomeranian-kopek.jpg",
-                title: "Померанский шпиц",
-                text: "Померанский шпиц – карликовая порода собак с плотным телосложением и крепкой мускулатурой"
-            },
-            {
-                id: 2,
-                src: "https://wallpapermoon.com/wp-content/uploads/2022/01/00010218.jpg",
-                title: "Бигль",
-                text: "Бигли – это веселые, энергичные охотничьи собаки среднего размера."
-            },
-            {
-                id: 3,
-                src: "https://wallbox.ru/resize/1920x1080/wallpapers/main2/201727/ovcarka12345678910111213141516.jpg",
-                title: "Немецкая овчарка",
-                text: "Немецкая овчарка – большая и выносливая собака, характеризующаяся хорошими охотничьими, боевыми и охранными навыками."
-            }
-        ]
+    getDataInfoAll() {
+        // debugger;
+        ajax.get('http://localhost:8000/stocks/', (data) => {
+            this.data = data
+            console.log('data', data)
+        })
     }
 
     get pageRoot() {
@@ -54,18 +45,52 @@ export class MainPage {
         productPage.render()
     }
 
+    clickBackUpdate() {
+        // console.log(this.data)
+        const dogspage = new DogsPage(this.parent, this.data)
+        dogspage.render()
+    }
+
+    clickBackAdd() {
+        // debugger;
+        // console.log(this.data)
+        // console.log(Object.keys(this.data).length)
+        const addpage = new AddPage(this.parent, this.data, Object.keys(this.data).length)
+        addpage.render()
+    }
+
     render() {
-        
+        // debugger;
+
         this.parent.innerHTML = ''
         const html = this.getHTML()
         this.parent.insertAdjacentHTML('beforeend', html)
+
+        const UpdateButton = new UpdateButtonComponent(this.pageRoot)
+        UpdateButton.render(this.clickBackUpdate.bind(this))
+
+        const AddButton = new AddButtonComponent(this.pageRoot)
+        AddButton.render(this.clickBackAdd.bind(this))
+
+        // const UpdateButton = new UpdateButtonComponent(this.pageRoot)
+        // UpdateButton.render(this.clickBack.bind(this))
         
-        const data = this.getData()
-        data.forEach((item) => {
-            const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item, this.clickCard.bind(this))
+        // ajax.post('http://localhost:8000/stocks/', (data) => {
+        //     this.renderData(data)
+        //     // this.data_info_user = data.response
+        //     console.log('data', data)
+        //     // console.log('getDataInfoUser', this.data_info_user)
+        // })
+        
+        const data = this.getDataInfoAll()
+        console.log(data)
+        // const data = this.getData()
+        // console.log(data)
+        // data.forEach((item) => {
+            // const productCard = new ProductCardComponent(this.pageRoot)
+            // productCard.render(item, this.clickCard.bind(this))
             // console.log('main/index.js; render, productCard:', productCard)
             // console.log('main/index.js; render, item:', item)
-        })
+        // })       
     }
 }
