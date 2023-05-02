@@ -32,7 +32,7 @@ export class DogsPage {
     }
 
     render() {
-        debugger;
+        // debugger;
 
         this.parent.innerHTML = ''
         const html = this.getHTML()

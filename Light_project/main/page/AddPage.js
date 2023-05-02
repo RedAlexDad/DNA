@@ -74,17 +74,9 @@ export class AddPage {
     
             console.log('obj: ', obj)
 
-            debugger;
+            // debugger;
             ajax.post('http://localhost:8000/stocks/', obj)
             
-        };
-        
-        // this.data.forEach((item) => {
-        //     const productCard = new ProductCardComponent(this.pageRoot)
-        //     productCard.render(item, this.clickCard.bind(this))
-        //     console.log('main/index.js; render, productCard:', productCard)
-        //     console.log('main/index.js; render, item:', item)
-        // })
-        
+        };       
     }
 }

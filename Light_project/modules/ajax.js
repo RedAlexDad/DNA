@@ -25,6 +25,16 @@ class Ajax {
                 // console.log(data);
             });
     }
+
+    delete(url, callback) {
+        // console.log('url:', url);
+        fetch(url, {method: 'DELETE'})
+            .then(response => response.json())
+            .then(data => {
+                callback(data);
+                // console.log(data);
+            });
+    }
 }
 
 export const ajax = new Ajax();

@@ -4,8 +4,10 @@ import {ajax} from "../modules/ajax.js";
 
 import {UpdateButtonComponent} from "../components/button/update.js"
 import {AddButtonComponent} from "../components/button/add.js"
+import {DeleteButtonComponent} from "../components/button/delete.js"
 import {DogsPage} from "./page/DogsPage.js"
 import {AddPage} from "./page/AddPage.js"
+import {DeletePage} from "./page/DeletePage.js"
  
 // Подключение CSS
 
@@ -59,6 +61,14 @@ export class MainPage {
         addpage.render()
     }
 
+    clickBackDelete() {
+        // debugger;
+        // console.log(this.data)
+        // console.log(Object.keys(this.data).length)
+        const addpage = new DeletePage(this.parent, this.data, Object.keys(this.data).length)
+        addpage.render()
+    }
+
     render() {
         // debugger;
 
@@ -71,6 +81,10 @@ export class MainPage {
 
         const AddButton = new AddButtonComponent(this.pageRoot)
         AddButton.render(this.clickBackAdd.bind(this))
+        
+        const DeleteButton = new DeleteButtonComponent(this.pageRoot)
+        DeleteButton.render(this.clickBackDelete.bind(this))       
+        
 
         // const UpdateButton = new UpdateButtonComponent(this.pageRoot)
         // UpdateButton.render(this.clickBack.bind(this))
