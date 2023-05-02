@@ -1,8 +1,22 @@
 export class ProductComponent {
     constructor(parent) {
         this.parent = parent
+        // console.log('pr', parent)
+    }
 
-        console.log('project/components/product/index.js; ProductComponent, this.parent:', this.parent)
+    getData() {
+        ajax.post(urls.getUserInfo(this.id), (data) => {
+            this.renderData(data.response)
+        })
+    }
+
+    renderData(item) {
+        const product = new ProductComponent(this.pageRoot)
+        product.render(item[0])
+    }
+
+    get pageRoot() {
+        return document.getElementById('data-info-user')
     }
 
     getHTML(data) {
@@ -15,8 +29,8 @@ export class ProductComponent {
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">${data.title}</h5>
-                                <p class="card-text">${data.text}</p>
+                                <h5 class="card-title">${data.first_name} ${data.last_name}</h5>
+                                <h5 class="card-title"> Город: ${data.city.title}</h5>
                             </div>
                         </div>
                     </div>
@@ -26,6 +40,7 @@ export class ProductComponent {
     }
 
     render(data) {
+        debugger;
         const html = this.getHTML(data)
         this.parent.insertAdjacentHTML('beforeend', html)
     }

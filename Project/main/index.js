@@ -1,35 +1,48 @@
-import {ProductCardComponent} from "../../Project/components/product-card/index.js";
+import {ButtonComponent} from "../components/button/index.js";
+import {ProductCardComponent} from "../components/product-card/index.js";
+import {ProductComponent} from "../components/product/index.js";
+import {ShowMainPage} from "../components/main/ShowMainPage.js";
 import {ProductPage} from "./product/index.js";
-// import {router} from "../internal/stocks/index.js";
-
-// Подключение CSS
+import {BackButtonComponent} from "../components/back-button/index.js";
+import {ajax} from "../modules/ajax.js";
+import {urls} from "../modules/urls.js";
+import {groupId} from "../modules/consts.js";
 
 export class MainPage {
-    constructor(parent) {
-        this.parent = parent;
+    constructor(parent, data_info) {
+        this.parent = parent
+        this.data_info = data_info
     }
-    
+
     getData() {
-        return [
-            {
-                id: 1,
-                src: "https://blog.zoo.com.tr/wp-content/uploads/pomeranian-kopek.jpg",
-                title: "Померанский шпиц",
-                text: "Померанский шпиц – карликовая порода собак с плотным телосложением и крепкой мускулатурой"
-            },
-            {
-                id: 2,
-                src: "https://wallpapermoon.com/wp-content/uploads/2022/01/00010218.jpg",
-                title: "Бигль",
-                text: "Бигли – это веселые, энергичные охотничьи собаки среднего размера."
-            },
-            {
-                id: 3,
-                src: "https://wallbox.ru/resize/1920x1080/wallpapers/main2/201727/ovcarka12345678910111213141516.jpg",
-                title: "Немецкая овчарка",
-                text: "Немецкая овчарка – большая и выносливая собака, характеризующаяся хорошими охотничьими, боевыми и охранными навыками."
-            }
-        ]
+        // debugger;
+        ajax.post(urls.getGroup(groupId), (data) => {
+            this.renderData(data.response[0])
+            this.data_info = data.response[0]
+            // console.log('data.response.items', data.response.items)
+            console.log('getData', this.data_info)
+        })
+    }
+
+    // getDataUser() {
+    //     ajax.post(urls.getUserInfo(this.data_info.id), (data) => {
+    //         this.renderData(data.response.items)
+    //         this.data_info = data.response.items
+    //     })
+    //     console.log('getDataUser', this.data_info)
+    // }
+
+    renderData(items) {
+        // debugger;
+        const show_main = new ShowMainPage(this.pageRoot)
+        show_main.render(items, this.clickCard.bind(this))
+        console.log('renderData(items)', show_main)
+
+        // items.forEach((item) => {
+        //     const productCard = new ProductCardComponent(this.pageRoot)
+
+        //     productCard.render(item, this.clickCard.bind(this))
+        // })
     }
 
     get pageRoot() {
@@ -39,35 +52,56 @@ export class MainPage {
     getHTML() {
         return (
             `
-                <div id="main-page" class="d-flex flex-wrap"><div/>
+            <div id="main-page">
+                <!-- <section class="carousel" aria-label="Gallery"></section> -->
+            </div>
             `
         )
+        // <section class="carousel" aria-label="Gallery" id="main-page"> </section>
     }
 
     clickCard(e) {
-        // debugger
+        // debugger;
         const cardId = e.target.dataset.id
-        console.log('project/main/index.js; clickCard, this.parent:', this.parent)
-        console.log('project/main/index.js; clickCard, cardId:', cardId)
+        // const press = undefined;
 
-        const productPage = new ProductPage(this.parent, cardId)
+        Object.entries(this.data_info).forEach(([key, value]) => {
+            // console.log('clickCard(E): ', key, value.id);
+            if(value.id == cardId){
+                // press = this.data_info.id;
+                this.data_info = value;
+                // console.log('press:', press)
+            }
+        });
+
+        // console.log('this.data_info:', this.data_info)
+
+        const productPage = new ProductPage(this.parent, cardId, this.data_info)
         productPage.render()
+
+        // console.log('cardId:', cardId)
+        // console.log('this.data_info.id:', this.data_info.id)
+
+        // this.getDataUser()
+        // console.log('this.data_info:', this.data_info)
+
+        // const data = e.target.dataset
+        // const info_data = document.getElementsByName(`card-${cardId}`)2 л
+        // console.log('info_data: ', info_data)
+        // console.log('index: ', document.getElementById(this.pageRoot))
+        // console.log('pageRoot: ', this.pageRoot)
+
+        // e.forEach((e) => {
+            // const productCard = new ProductPage(this.pageRoot)
+            // productCard.render(e, this.clickCard.bind(this))
+        // })
     }
 
     render() {
-        
+        // debugger;   
         this.parent.innerHTML = ''
         const html = this.getHTML()
         this.parent.insertAdjacentHTML('beforeend', html)
-        
-        debugger;
-        const data = this.getData()
-        // const data = router.get('/', StocksController.findStocks);
-        data.forEach((item) => {
-            const productCard = new ProductCardComponent(this.pageRoot)
-            productCard.render(item, this.clickCard.bind(this))
-            // console.log('main/index.js; render, productCard:', productCard)
-            // console.log('main/index.js; render, item:', item)
-        })
+        this.getData()
     }
 }

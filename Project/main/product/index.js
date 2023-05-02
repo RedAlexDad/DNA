@@ -1,25 +1,29 @@
-import {ProductComponent} from "../../../Project/components/product/index.js";
-import {BackButtonComponent} from "../../../Project/components/back-button/index.js";
+import {ProductComponent} from "../../components/product/index.js";
+import {BackButtonComponent} from "../../components/back-button/index.js";
 import {MainPage} from "../index.js";
+// import {ajax} from "../../modules/ajax.js";
+// import {urls} from "../../modules/urls.js";
+// import {groupId} from "../../modules/consts.js";
 
 export class ProductPage {
-    constructor(parent, id) {
+    constructor(parent, id, data) {
         this.parent = parent
         this.id = id
-
-        console.log('ProductPage; parent:', parent)
+        this.data = data
+        console.log('ProductPage data:', data)
     }
+    
 
     getData() {
         return {
             id: 1,
-            src: "https://static.vecteezy.com/system/resources/previews/000/486/315/original/shopping-cart-icon-design-vector.jpg",
-            // title: `ID ${this.id} продукта`,
-            title: `ID ${this.id}`,
-            text: "Успешно! Ожидайте, собака в ближайшее время будет у Вас"
+            src: `${this.data.photo_400_orig}`,
+            title: `Акция ${this.data.id}`,
+            first_name: this.data.first_name,
+            last_name: this.data.last_name,
+            city: this.data.city
         }
     }
-    
 
     get pageRoot() {
         return document.getElementById('product-page')
@@ -49,7 +53,5 @@ export class ProductPage {
         const data = this.getData()
         const stock = new ProductComponent(this.pageRoot)
         stock.render(data)
-
-        console.log('main/product/index.js; render:', data)
     }
 }
