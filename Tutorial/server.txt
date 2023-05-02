@@ -1,0 +1,70 @@
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+
+// мы создаем приложение
+const app = express(); 
+
+const host = 'localhost';
+const port = 8000;
+
+const handler = (req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+    res.end('ПСП такой крутой!');
+};
+
+// Part 1
+// мы объявляем, что на все запросы по любому пути (путь указывается первым аргументом в определенном формате) обрабатывай с помощью функции handler
+// app.all('*', handler);
+
+// Part 2
+// Теперь у нас есть 2 обработчика по 2-м разным адресам /music и /course.
+app.get('/music', (req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+    res.end('Я слушаю только Radiohead!');
+});
+
+app.get('/course', (req, res) => {
+    res.json({ course: 'ПСП' });
+});
+
+app.listen(port, host, () => { // 3
+    console.log(`Сервер запущен по адресу http://${host}:${port}`);
+});
+
+
+// Для чтения с JSON
+const readJson = (fileName) => {
+    const file = fs.readFileSync(path.join(__dirname, fileName), "utf8");
+    const json = JSON.parse(file);
+
+    return json;
+};
+
+const storageName = 'stocks.json';
+
+app.get('/stocks/:id', (req, res) => {
+    // мы достаем из url запроса параметр id. Т.е. если, например, будет сделан запрос на адрес http://localhost:8000/stocks/2, то req.params.id вернет нам 2 и тд. 
+    // Название для поля id берет из адреса который мы указали: /stocks/:id. 
+    // Т.е. в теории мы могли бы его поменять на что-нибудь вроде /stocks/:stock и доставать из запроса так req.params.stock.
+    const id = req.params.id;
+    
+    const numberId = Number.parseInt(id);
+    // мы проверяем, что id, который нам передали - это число. И если нет, то отдаем ошибку со статусом 400.
+    if (Number.isNaN(numberId)) {
+        res.status(400).send({status: 'Bad Request', message: 'id must be number!'});
+    }
+
+    const stocks = readJson(storageName);
+    // мы, уже считав данные из файла, используем метод find для поиска элемента с таким id. Если такой элемент не найдется, то в переменную stock запишется undefined.
+    const stock = stocks.find((value) => {
+        return value.id === numberId;
+    });
+
+    // проверяем смогли ли мы найти акцию с переданным id. Если не смогли, то отдаем ошибку с 404 статусом.
+    if (stock) {
+        res.send(stock);
+    } else {
+        res.status(404).send({status: 'Not Found', message: `not found stock with id ${numberId}`});
+    }
+});
